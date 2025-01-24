@@ -10,7 +10,7 @@ export default function Home() {
       <View>
       <Text className="text-white text-6xl font-extrabold m-10 text-center">
        Movie
-    <Text className="text-[#FF5733]">Land</Text>
+    <Text className="text-[#FF5733]">LanD</Text>
   </Text> 
   </View> 
       <View className="flex flex-row justify-between items-center px-4 py-8">
