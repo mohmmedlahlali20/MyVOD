@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from "react-native";
-import { Link, Stack } from "expo-router";
+import { Link, Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import path from "../axios/path"; 
 import { register } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
-import axios from "axios";
+
 
 export default function Register() {
   const dispatch = useDispatch();
+  const router = useRouter()
   const [form, setForm] = useState({
     firstname: "Mohammed",
     lastname: "Lahlali",
-    email: "Mohammepklhpd@gmail.com",
+    email: "Mohammed203@gmail.com",
     password: "password123",
     confirmPassword: "password123",
   });
@@ -34,17 +35,13 @@ export default function Register() {
 
   
     try {
-      const res = await axios.post("http://localhost:7000/api/auth/register", {
+      const res = await path.post("auth/register", {
         firstname: form.firstname,
         lastname: form.lastname,
         email: form.email,
         password: form.password
-      }, {
-        headers: { "Content-Type": "application/json" },
       });
-      
-      console.log("fuck");
-      console.log(res);
+      router.push("/login");
       dispatch(register(res.data));
       Alert.alert("Succès", "Inscription réussie !");
     } catch (error: any) {
