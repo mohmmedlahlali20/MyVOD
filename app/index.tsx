@@ -31,7 +31,7 @@ export default function Home() {
           <Text className="text-gray-300 mt-2">Some description about the featured movie.</Text>
         </View>
                 <View className="mb-6 px-4">
-          <Text className="text-white text-xl font-semibold mb-2">Trending Now</Text>
+          <Text className="text-white text-xl font-semibold mb-2">Favorit</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Image 
               source={tom}
@@ -49,7 +49,7 @@ export default function Home() {
         </View>
         
         <View className="mb-6 px-4">
-          <Text className="text-white text-xl font-semibold mb-2">New Releases</Text>
+          <Text className="text-white text-xl font-semibold mb-2">Movies</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Image 
               source={tom2}
