@@ -1,27 +1,30 @@
 import "../global.css"
 import React, { useEffect } from "react"
 import { Slot, Stack, useRouter, useSegments } from "expo-router"
+import { Provider } from "react-redux"
+import store from "./redux/store"
 
 const useAuth = () => {
-  return { user: null } 
+  return { user: null }
 }
 
 function RootLayoutNav() {
-  const { user } = useAuth()
-  const segments = useSegments()
-  const router = useRouter()
+  // const { user } = useAuth()
+  // const segments = useSegments()
+  // const router = useRouter()
 
-  useEffect(() => {
-    const inAuthGroup = segments[0] === "(auth)"
+  // useEffect(() => {
+  //   const inAuthGroup = segments[0] === "(auth)"
 
-    if (!user && !inAuthGroup) {
-      router.replace("/login")
-    } else if (user && inAuthGroup) {
-      router.replace("/")
-    }
-  }, [user, segments])
+  //   if (!user && !inAuthGroup) {
+  //     router.replace("/login")
+  //   } else if (user && inAuthGroup) {
+  //     router.replace("/")
+  //   }
+  // }, [user, segments])
 
   return (
+
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen
@@ -31,12 +34,17 @@ function RootLayoutNav() {
           headerStyle: { backgroundColor: "#f8fafc" },
         }}
       />
-    
+
     </Stack>
+
   )
 }
 
 export default function RootLayout() {
-  return <RootLayoutNav />
+  return (
+    <Provider store={store}>
+      <RootLayoutNav />
+    </Provider>
+  )
 }
 
