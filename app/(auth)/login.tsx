@@ -1,9 +1,41 @@
-import React from "react"
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native"
-import { Stack, Link } from "expo-router"
-import { StatusBar } from "expo-status-bar"
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from "react-native";
+import { Stack, Link, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import path from "../axios/path";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/userSlice";
 
 export default function Login() {
+  const [email, setEmail] = useState("Mohammed203@gmail.com"); 
+  const [password, setPassword] = useState("password123"); 
+  const dispatch = useDispatch();
+  const router = useRouter(); 
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Error", "Please enter both email and password");
+      return;
+    }
+
+    try {
+      const res = await path.post("auth/login", { email, password });
+
+      console.log("Login Response:", res.data);
+
+      dispatch(login(res.data));
+
+      Alert.alert("Success", "Welcome back!");
+
+      router.replace("/");
+    } catch (error: any) {
+      console.error("Login Error:", error);
+
+      const errorMessage = error.response?.data?.message || "Login failed. Please try again.";
+      Alert.alert("Login Error", errorMessage);
+    }
+  };
+
   return (
     <ScrollView className="flex-1 bg-black">
       <Stack.Screen
@@ -14,34 +46,41 @@ export default function Login() {
         }}
       />
       <StatusBar style="light" />
+      
       <View className="flex-1 justify-center px-6 py-12">
         <Text className="text-3xl font-bold mb-6 text-center text-white">Welcome Back</Text>
 
-        <View className="space-y-4">
-          <View>
-            <Text className="text-sm font-medium text-white mb-1">Email</Text>
-            <TextInput
-              className="w-full px-3 py-2 border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="john.doe@example.com"
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </View>
-
-          <View>
-            <Text className="text-sm font-medium text-white mb-1">Password</Text>
-            <TextInput
-              className="w-full px-3 py-2 border border-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="********"
-              secureTextEntry
-            />
-          </View>
+        {/* Email Input */}
+        <View className="mb-4">
+          <Text className="text-sm font-medium text-white mb-1">Email</Text>
+          <TextInput
+            className="w-full px-3 py-2 border border-white text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            placeholder="john.doe@example.com"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
+          />
         </View>
 
-        <TouchableOpacity className="mt-6 bg-red-600 py-3 rounded-md" activeOpacity={0.8}>
+        {/* Password Input */}
+        <View>
+          <Text className="text-sm font-medium text-white mb-1">Password</Text>
+          <TextInput
+            className="w-full px-3 py-2 border border-white text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            placeholder="********"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+        </View>
+
+        {/* Login Button */}
+        <TouchableOpacity className="mt-6 bg-red-600 py-3 rounded-md" activeOpacity={0.8} onPress={handleLogin}>
           <Text className="text-center text-white font-semibold">Log In</Text>
         </TouchableOpacity>
 
+        {/* Register Link */}
         <Text className="mt-4 text-center text-sm text-white">
           Don't have an account?{" "}
           <Link href="/register" className="text-red-600 font-semibold">
@@ -50,6 +89,5 @@ export default function Login() {
         </Text>
       </View>
     </ScrollView>
-  )
+  );
 }
-
