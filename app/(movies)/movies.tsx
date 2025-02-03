@@ -15,7 +15,6 @@ export default function Movies() {
     dispatch(fetchMovie());
   }, [dispatch]);
 
-  // Filter movies based on the search input
   const filteredMovies = useMemo(() => {
     return movies.filter((movie) =>
       movie.title.toLowerCase().includes(search.toLowerCase())
