@@ -11,7 +11,6 @@ export interface Movie {
   director: string;
   movies: string;
 }
-
 export interface MoviesState {
   movies: Movie[];
   selectedMovie: Movie | null;
@@ -42,22 +41,19 @@ export const fetchMovie = createAsyncThunk<Movie[], void>(
   );
   
 
-export const fetchMovieDetails = createAsyncThunk<Movie, number>(
+export const fetchMovieDetails = createAsyncThunk<Movie, string>(
   "movies/fetchMovieDetails",
   async (movieId, { rejectWithValue }) => {
     try {
       const res = await path.get(`film/getFilms/${movieId}`);
-
-      if (!res.data) {
-        throw new Error("Invalid movie details response");
-      }
-
+      if (!res.data) throw new Error("Invalid movie details response");
       return res.data;
     } catch (error: any) {
       return rejectWithValue(error?.response?.data?.message || error.message || "Failed to fetch movie details");
     }
   }
 );
+
 
 const moviesSlice = createSlice({
   name: "movies",
