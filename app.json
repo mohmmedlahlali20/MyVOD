@@ -3,7 +3,7 @@
     "name": "MyVod",
     "slug": "MyVod",
     "version": "1.0.0",
-
+"newArchEnabled": true,
     "scheme": "MyVod",
     "web": {
       "bundler": "metro",
