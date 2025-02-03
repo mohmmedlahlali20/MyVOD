@@ -1,27 +1,12 @@
 import "../global.css"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Slot, Stack, useRouter, useSegments } from "expo-router"
 import { Provider } from "react-redux"
 import store from "./redux/store"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const useAuth = () => {
-  return { user: null }
-}
 
 function RootLayoutNav() {
-  // const { user } = useAuth()
-  // const segments = useSegments()
-  // const router = useRouter()
-
-  // useEffect(() => {
-  //   const inAuthGroup = segments[0] === "(auth)"
-
-  //   if (!user && !inAuthGroup) {
-  //     router.replace("/login")
-  //   } else if (user && inAuthGroup) {
-  //     router.replace("/")
-  //   }
-  // }, [user, segments])
 
   return (
 
@@ -41,10 +26,27 @@ function RootLayoutNav() {
 }
 
 export default function RootLayout() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const token = await AsyncStorage.getItem("token");
+      if (token) {
+        setIsLoggedIn(true);
+        router.push("/"); 
+      } else {
+        setIsLoggedIn(false);
+        router.push("/login");
+      }
+    };
+
+    checkLoginStatus();
+  }, [router]);
+
   return (
     <Provider store={store}>
       <RootLayoutNav />
     </Provider>
-  )
+  );
 }
-
