@@ -17,6 +17,7 @@ export interface MoviesState {
   error: string | null;
 }
 
+
 const initialState: MoviesState = {
   movies: [],
   selectedMovie: null,
