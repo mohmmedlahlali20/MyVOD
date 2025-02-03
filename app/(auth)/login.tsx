@@ -5,12 +5,13 @@ import { StatusBar } from "expo-status-bar";
 import path from "../axios/path";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/userSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
-  const [email, setEmail] = useState("Mohammed203@gmail.com"); 
-  const [password, setPassword] = useState("password123"); 
+  const [email, setEmail] = useState("Mohammed203@gmail.com");
+  const [password, setPassword] = useState("password123");
   const dispatch = useDispatch();
-  const router = useRouter(); 
+  const router = useRouter();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -19,19 +20,20 @@ export default function Login() {
     }
 
     try {
+      console.log(email, password );
+      
+      
       const res = await path.post("auth/login", { email, password });
-
-      console.log("Login Response:", res.data);
-
-      dispatch(login(res.data));
-
+      dispatch(login(res.data.user));
+      await AsyncStorage.setItem("token", res.data.user.token);
+      await AsyncStorage.setItem("user", JSON.stringify(res.data.user));
       Alert.alert("Success", "Welcome back!");
 
-      router.replace("/");
+      router.push("/");
     } catch (error: any) {
       console.error("Login Error:", error);
 
-      const errorMessage = error.response?.data?.message || "Login failed. Please try again.";
+      const errorMessage = error.response?.data?.message || error.message || "Login failed. Please try again.";
       Alert.alert("Login Error", errorMessage);
     }
   };
@@ -46,7 +48,7 @@ export default function Login() {
         }}
       />
       <StatusBar style="light" />
-      
+
       <View className="flex-1 justify-center px-6 py-12">
         <Text className="text-3xl font-bold mb-6 text-center text-white">Welcome Back</Text>
 
