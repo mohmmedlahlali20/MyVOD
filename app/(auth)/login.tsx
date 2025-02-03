@@ -50,7 +50,6 @@ export default function Login() {
       <View className="flex-1 justify-center px-6 py-12">
         <Text className="text-3xl font-bold mb-6 text-center text-white">Welcome Back</Text>
 
-        {/* Email Input */}
         <View className="mb-4">
           <Text className="text-sm font-medium text-white mb-1">Email</Text>
           <TextInput
@@ -63,7 +62,6 @@ export default function Login() {
           />
         </View>
 
-        {/* Password Input */}
         <View>
           <Text className="text-sm font-medium text-white mb-1">Password</Text>
           <TextInput
@@ -75,12 +73,10 @@ export default function Login() {
           />
         </View>
 
-        {/* Login Button */}
         <TouchableOpacity className="mt-6 bg-red-600 py-3 rounded-md" activeOpacity={0.8} onPress={handleLogin}>
           <Text className="text-center text-white font-semibold">Log In</Text>
         </TouchableOpacity>
 
-        {/* Register Link */}
         <Text className="mt-4 text-center text-sm text-white">
           Don't have an account?{" "}
           <Link href="/register" className="text-red-600 font-semibold">
