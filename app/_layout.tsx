@@ -1,52 +1,41 @@
-import "../global.css"
-import React, { useEffect, useState } from "react"
-import { Slot, Stack, useRouter, useSegments } from "expo-router"
-import { Provider } from "react-redux"
-import store from "./redux/store"
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import "../global.css";
+import React, { useEffect } from "react";
+import { Stack, useRouter } from "expo-router";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import { ActivityIndicator, View } from "react-native";
+import { useAuth } from "./context/useAuth";
 
 function RootLayoutNav() {
-
   return (
-
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          headerStyle: { backgroundColor: "#f8fafc" },
-        }}
-      />
-
+      <Stack.Screen name="profile" options={{ title: "Profile" }} />
+      <Stack.Screen name="login" options={{ title: "Login" }} />
+      <Stack.Screen name="register" options={{ title: "Register" }} />
     </Stack>
-
-  )
+  );
 }
 
-export default function RootLayout() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+function RootLayoutInner() {
+  const { user } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    const checkLoginStatus = async () => {
-      const token = await AsyncStorage.getItem("token");
-      if (token) {
-        setIsLoggedIn(true);
-        router.push("/"); 
-      } else {
-        setIsLoggedIn(false);
-        router.push("/login");
-      }
-    };
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user]);
 
-    checkLoginStatus();
-  }, [router]);
+  
 
+  return <RootLayoutNav />;
+}
+
+export default function RootLayout() {
   return (
     <Provider store={store}>
-      <RootLayoutNav />
+      <RootLayoutInner /> 
     </Provider>
   );
 }
