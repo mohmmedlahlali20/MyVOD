@@ -12,7 +12,8 @@ export default function MoviesDetails() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
-  const { selectedMovie: movie, error } = useSelector((state: RootState) => state.movies);  const [isFavorite, setIsFavorite] = useState(false);
+  const { selectedMovie: movie, error } = useSelector((state: RootState) => state.movies); 
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     if (movieId) {
