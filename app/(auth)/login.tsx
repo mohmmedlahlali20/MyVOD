@@ -26,7 +26,7 @@ export default function Login() {
       const res = await path.post("auth/login", { email, password });
       dispatch(login(res.data.user));
       await AsyncStorage.setItem("token", res.data.user.token);
-      await AsyncStorage.setItem("user", JSON.stringify(res.data.user));
+      await AsyncStorage.setItem("user", JSON.stringify(res.data.user.user));
       Alert.alert("Success", "Welcome back!");
 
       router.push("/");
