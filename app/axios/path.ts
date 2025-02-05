@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 const path = axios.create({
-    baseURL: 'http://192.168.8.197:7000/api/',
+    baseURL: 'http://192.168.8.225:7000/api/',
 })
 path.interceptors.request.use(
     async (config) => {
@@ -15,11 +15,11 @@ path.interceptors.request.use(
              config.headers.Authorization = `Bearer ${token}`;
          }
 
-        if (config.data instanceof FormData) {
-            config.headers["Content-Type"] = "multipart/form-data";
-        } else {
+        // if (config.data instanceof FormData) {
+        //     config.headers["Content-Type"] = "multipart/form-data";
+        // } else {
             config.headers["Content-Type"] = "application/json";
-        }
+        // }
 
         return config;
     },
