@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {  createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import path from "../axios/path";
 
 export type User = {
   id: string;
@@ -25,6 +26,23 @@ const initialState: {
   isLoading: false,
 };
 
+export const addMovieIntoFavorits = createAsyncThunk(
+  "addMovieIntoFavorits",
+  async ({ movieId, movieData }: { movieId: string; movieData: any }, { rejectWithValue }) => {
+    try {
+     
+      
+      const response = await path.post(`addFavoris/${movieId}`, movieData);
+      return response.data;
+    } catch (error) {
+      console.error("Error adding movie to favorites:", error);
+      return rejectWithValue("Failed to add movie to favorites");
+    }
+  }
+);
+
+
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -47,16 +65,9 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.isLoading = false;
     },
-    addFavorite(state, action: PayloadAction<string>) {
-      if (!state.favorites.includes(action.payload)) {
-        state.favorites.push(action.payload);
-      }
-    },
-    removeFavorite(state, action: PayloadAction<string>) {
-      state.favorites = state.favorites.filter((movie) => movie !== action.payload);
-    },
+    
   },
 });
 
-export const { login, logout, register, addFavorite, removeFavorite } = authSlice.actions;
+export const { login, logout, register } = authSlice.actions;
 export default authSlice.reducer;
