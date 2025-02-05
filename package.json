@@ -12,12 +12,14 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@expo/vector-icons": "^14.0.0",
+    "@expo/vector-icons": "^14.0.4",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-navigation/native": "^7.0.3",
     "@reduxjs/toolkit": "^2.5.1",
     "axios": "^1.7.9",
     "expo": "~52.0.28",
+    "expo-av": "~15.0.2",
+    "expo-blur": "^14.0.3",
     "expo-constants": "~17.0.5",
     "expo-linear-gradient": "~14.0.2",
     "expo-linking": "~7.0.5",
