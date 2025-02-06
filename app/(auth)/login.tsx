@@ -24,14 +24,14 @@ export default function Login() {
       
       
       const res = await path.post("auth/login", { email, password });
-      dispatch(login(res.data.user));
+      dispatch(login(res.data.user)); 
       await AsyncStorage.setItem("token", res.data.user.token);
       await AsyncStorage.setItem("user", JSON.stringify(res.data.user.user));
       Alert.alert("Success", "Welcome back!");
 
       router.push("/");
     } catch (error: any) {
-      console.error("Login Error:", error);
+      console.error("Login Error:", error); 
 
       const errorMessage = error.response?.data?.message || error.message || "Login failed. Please try again.";
       Alert.alert("Login Error", errorMessage);
