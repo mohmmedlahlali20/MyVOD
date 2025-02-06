@@ -38,9 +38,8 @@ export default function SessionList({ movieId }: { movieId: string }) {
                         {selectedSession.seats.map((seat, index) => (
                             <View
                                 key={index}
-                                className={`w-12 h-12 flex justify-center items-center rounded-lg ${
-                                    seat.available ? "bg-green-500" : "bg-gray-700 opacity-50"
-                                }`}
+                                className={`w-12 h-12 flex justify-center items-center rounded-lg ${seat.available ? "bg-green-500" : "bg-gray-700 opacity-50"
+                                    }`}
                             >
                                 <Text className="text-white font-semibold">{index + 1}</Text>
                             </View>
@@ -48,6 +47,11 @@ export default function SessionList({ movieId }: { movieId: string }) {
                     </View>
                 </View>
             )}
+            <TouchableOpacity className="bg-red-600 py-4 rounded-xl mt-3">
+                <Text className="text-white text-center text-lg font-semibold">
+                    Book Tickets 
+                </Text>
+            </TouchableOpacity>
         </View>
     );
 }
