@@ -9,6 +9,7 @@ export interface Salle {
 }
 
 export interface Seance {
+    isAvailable(seat: any, isAvailable: any): void;
     _id: string;
     movieId: Movie;
     roomId: Salle;
@@ -50,14 +51,19 @@ const seanceSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchSessions.fulfilled, (state, action: PayloadAction<Seance[]>) => {
-                state.seance = action.payload;
-                state.error = null;
-            })
-            .addCase(fetchSessions.rejected, (state, action) => {
-                state.error = action.payload as string;
-            });
-    },
+        .addCase(fetchSessions.pending, (state) => {
+            state.loading = true;
+        })
+        .addCase(fetchSessions.fulfilled, (state, action: PayloadAction<Seance[]>) => {
+            state.seance = action.payload;
+            state.loading = false;
+            state.error = null;
+        })
+        .addCase(fetchSessions.rejected, (state, action) => {
+            state.error = action.payload as string;
+            state.loading = false;
+        });
+    }
 });
 
 export default seanceSlice.reducer;
