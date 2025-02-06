@@ -98,7 +98,7 @@ export default function MoviesDetails() {
         }}
       />
       <View className="relative">
-        <Image source={{ uri: `http://192.168.8.235:7000/${movie.image}` }} className="w-full h-96" resizeMode="cover" />
+        <Image source={{ uri: `http://192.168.8.152:7000/${movie.image}` }} className="w-full h-96" resizeMode="cover" />
         <LinearGradient colors={["transparent", "rgba(0,0,0,0.8)", "black"]} className="absolute bottom-0 left-0 right-0 h-32" />
       </View>
 
