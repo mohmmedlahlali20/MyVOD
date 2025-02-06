@@ -59,7 +59,7 @@ export default function Movies() {
           <View key={item._id} className="mb-6 flex flex-row items-center">
             <TouchableOpacity onPress={() => router.push(`/details?movieId=${item._id}` as any)}>
               <Image
-                source={{ uri: `http://192.168.8.152:7000/${item.image}` }}
+                source={{ uri: `http://192.168.1.28:7000/${item.image}` }}
                 className="w-60 h-40 rounded mr-4"
               />
             </TouchableOpacity>
