@@ -31,18 +31,30 @@ export default function MoviesDetails() {
     if (movieId) {
       dispatch(fetchMovieDetails(movieId as string));
     }
-    const fetchUserID = async () => {
+    (async () => {
       const id = await userID();
       console.log("User ID:", id);
-    };
-    fetchUserID();
+    })();
   }, [dispatch, movieId]);
+
 
   useEffect(() => {
     if (movie && favorites) {
       setIsFavorite(favorites.includes(movieId as string));
     }
   }, [movie, favorites]);
+
+
+
+
+
+
+
+  //reservation
+
+  const handleReservation = () => {
+    router.push(`/reservations?movieId=${movieId}`);
+  };
 
   const handleFavorite = async () => {
     if (!movie) return;
@@ -112,8 +124,8 @@ export default function MoviesDetails() {
             )
           }
 
-          <TouchableOpacity className="bg-gray-800 rounded-lg py-3 px-6 flex-1 ml-2 items-center">
-            <Text className="text-white font-semibold text-lg">Reserve</Text>
+          <TouchableOpacity onPress={() => router.push(`/reservations?movieId=${movieId}`)} className="bg-gray-800 rounded-lg py-3 px-6 flex-1 ml-2 items-center">
+            <Text className="text-2xl text-white " >Reserve</Text>
           </TouchableOpacity>
         </View>
 
