@@ -1,24 +1,28 @@
-import { useState, useEffect } from "react"
-import type { AVPlaybackStatus, AVPlaybackStatusSuccess } from "expo-av"
+import { useEffect, useRef, useState } from "react"
+import { Video, AVPlaybackStatusSuccess } from "expo-av"
 
-export const useVideoPlayback = () => {
-  const [status, setStatus] = useState<AVPlaybackStatus | null>(null)
+
+const useVideoPlayback = () => {
+  const videoRef = useRef<Video>(null)
+  const [status, setStatus] = useState<AVPlaybackStatusSuccess | null>(null)
   const [showControls, setShowControls] = useState(true)
 
   useEffect(() => {
     const timer = setTimeout(() => setShowControls(false), 3000)
     return () => clearTimeout(timer)
-  }, []) 
+  }, [showControls])
 
-  const togglePlayPause = () => {
-    if ((status as AVPlaybackStatusSuccess)?.isPlaying) {
-      setStatus((prevStatus) => prevStatus && 'isPlaying' in prevStatus ? { ...prevStatus, isPlaying: false } : null)
+  const togglePlayPause = async () => {
+    if (!status) return
+    if (status.isPlaying) {
+      await videoRef.current?.pauseAsync()
     } else {
-      setStatus((prevStatus) => prevStatus && 'isPlaying' in prevStatus ? { ...prevStatus, isPlaying: true } : null)
+      await videoRef.current?.playAsync()
     }
   }
 
   return {
+    videoRef,
     status,
     setStatus,
     showControls,
@@ -27,3 +31,4 @@ export const useVideoPlayback = () => {
   }
 }
 
+export default useVideoPlayback;
