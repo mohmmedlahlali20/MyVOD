@@ -86,7 +86,7 @@ export default function MoviesDetails() {
         }}
       />
       <View className="relative">
-        <Image source={{ uri: `http://192.168.8.225:7000/${movie.image}` }} className="w-full h-96" resizeMode="cover" />
+        <Image source={{ uri: `http://192.168.8.235:7000/${movie.image}` }} className="w-full h-96" resizeMode="cover" />
         <LinearGradient colors={["transparent", "rgba(0,0,0,0.8)", "black"]} className="absolute bottom-0 left-0 right-0 h-32" />
       </View>
 
@@ -100,12 +100,18 @@ export default function MoviesDetails() {
 
 
         <View className="flex-row justify-between mb-6">
-          <TouchableOpacity
-            className="bg-red-600 rounded-lg py-3 px-6 flex-1 mr-2 items-center"
-            onPress={() => router.push(`/video?movieId=${movieId}`)}
-          >
-            <Text className="text-white font-semibold text-lg">Watch Now</Text>
-          </TouchableOpacity>
+
+          {
+            movie.movies && (
+              <TouchableOpacity
+                className="bg-red-600 rounded-lg py-3 px-6 flex-1 mr-2 items-center"
+                onPress={() => router.push(`/video?movieId=${movieId}`)}
+              >
+                <Text className="text-white font-semibold text-lg">Watch Now</Text>
+              </TouchableOpacity>
+            )
+          }
+
           <TouchableOpacity className="bg-gray-800 rounded-lg py-3 px-6 flex-1 ml-2 items-center">
             <Text className="text-white font-semibold text-lg">Reserve</Text>
           </TouchableOpacity>
