@@ -32,7 +32,7 @@ export const addMovieIntoFavorits = createAsyncThunk(
     try {
      
       
-      const response = await path.post(`addFavoris/${movieId}`, movieData);
+      const response = await path.post(`favoris/addFavoris/${movieId}`, movieData);
       return response.data;
     } catch (error) {
       console.error("Error adding movie to favorites:", error);
