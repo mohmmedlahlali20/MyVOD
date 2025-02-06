@@ -4,11 +4,11 @@ import axios from 'axios';
 
 
 const path = axios.create({
-    baseURL: 'http://192.168.8.235:7000/api/',
+    baseURL: 'http://192.168.8.152:7000/api/',
 })
 path.interceptors.request.use(
     async (config) => {
-        console.log('config', config);
+        // console.log('config', config);
         const token = await AsyncStorage.getItem('token');
 
         if (token) {
