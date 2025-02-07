@@ -20,7 +20,7 @@ export default function Login() {
     }
 
     try {
-      console.log(email, password );
+     
       
       
       const res = await path.post("auth/login", { email, password });
