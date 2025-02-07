@@ -5,6 +5,7 @@ import { createReservarion, Reservation } from "../server/reservation";
 interface ReservationStat {
     reservations: Reservation[],
     sessionr: any,
+    seats:number,
     status: "idle" | "loading" | "succeeded" | "failed";
     error: string | null;
 }
@@ -14,6 +15,7 @@ interface ReservationStat {
 const initialState: ReservationStat = {
     reservations: [],
     sessionr: {},
+    seats: 0,
     status: "idle",
     error: null,
 }
@@ -24,7 +26,8 @@ export const createReservations = createAsyncThunk(
     async ({ session, seats, userId }: Reservation, { rejectWithValue }) => {
         try {
             const response = await createReservarion(session, seats, userId);
-            return response;
+            console.log("response", response);
+            return response.data;
         } catch (err) {
             console.error("Error creating reservation:", err);
             return rejectWithValue("Failed to create reservation");
