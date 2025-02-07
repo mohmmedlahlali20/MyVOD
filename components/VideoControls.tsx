@@ -6,15 +6,12 @@ import { router } from "expo-router"
 import type { AVPlaybackStatus } from "expo-av"
 
 interface VideoControlsProps {
-  movie: {
-    title: string
-    overview: string
-  }
   status: AVPlaybackStatus | null
   togglePlayPause: () => void
+  movie: { title: string }
 }
+const VideoControls: React.FC<VideoControlsProps> = ({ status, togglePlayPause, movie }) => (
 
-const VideoControls: React.FC<VideoControlsProps> = ({ movie, status, togglePlayPause }) => (
   <BlurView intensity={80} tint="dark" className="absolute inset-0">
     <View className="flex-1 justify-between p-4">
       <TouchableOpacity onPress={() => router.back()} className="w-10 h-10 justify-center items-center">
