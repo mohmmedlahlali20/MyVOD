@@ -10,6 +10,8 @@ import { addMovieIntoFavorits } from "../redux/userSlice";
 import Icon from "react-native-vector-icons/FontAwesome";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import CommentSection from "~/components/Comments";
+import ReviewSection from "~/components/Review";
 
 export default function MoviesDetails() {
   const { movieId } = useLocalSearchParams();
@@ -132,7 +134,12 @@ export default function MoviesDetails() {
         <Text className="text-gray-400 mb-2">Director: {movie.director?.firstname}</Text>
         <Text className="text-gray-400 mb-2">Release Date: {movie.publishedDate.toString()}</Text>
         <Text className="text-gray-400 mb-2">Genre: {movie.genre}</Text>
+
+
+        <ReviewSection movieId={movieId as string} />
+        <CommentSection movieId={movieId as string} />
       </View>
+
     </ScrollView>
   );
 }
