@@ -15,10 +15,6 @@ export function useAuth() {
   useEffect(() => {
     const checkAuth = async () => {
       const storedToken = await AsyncStorage.getItem("token");
-      console.log('====================================');
-      console.log('storedToken', storedToken);
-      console.log('====================================');
-
       if (!storedToken && !token) {
           router.push("/login");
           return;
