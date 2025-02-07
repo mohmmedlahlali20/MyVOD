@@ -1,9 +1,13 @@
 import path from "../axios/path";
 
 export interface Reservation  {
+
     session:string,
-    seats:number,
+
+    seats:number[],
+
     userId:string
+
 }
 
 const createReservarion = async (session: string, seats: number[], userId: string) => {
