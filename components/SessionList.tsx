@@ -6,7 +6,7 @@ import { createReservations } from "~/app/redux/reservationSlice";
 import { fetchSessions, Seance } from "~/app/redux/seanceSlice";
 import { AppDispatch, RootState } from "~/app/redux/store";
 
-export default function SessionList({ movieId }: { movieId: string }) {
+export default function SessionList({ movieId }: { movieId: string | string[] }) {
     const dispatch = useDispatch<AppDispatch>();
     const { seance, error, loading } = useSelector((state: RootState) => state.seance);
     const [selectedSession, setSelectedSession] = useState<Seance | null>(null);
@@ -24,7 +24,7 @@ export default function SessionList({ movieId }: { movieId: string }) {
 
     useEffect(() => {
         if (movieId) {
-            dispatch(fetchSessions(movieId));
+            dispatch(fetchSessions(movieId as string));
         }
     }, [dispatch, movieId]);
 
@@ -104,7 +104,7 @@ export default function SessionList({ movieId }: { movieId: string }) {
 
             <TouchableOpacity className="bg-red-600 py-4 rounded-xl mt-3" onPress={handleReservation}>
                 <Text className="text-white text-center text-lg font-semibold">
-                    Book Tickets ({selectedSeats.length})
+                    Book Tickets 
                 </Text>
             </TouchableOpacity>
         </View>
