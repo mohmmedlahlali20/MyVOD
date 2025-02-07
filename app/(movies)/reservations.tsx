@@ -50,7 +50,7 @@ const Reservations = () => {
 
       {movie && (
         <View className="relative">
-          <Image source={{ uri: `http://192.168.1.28:7000/${movie.image}` }} className="w-full h-96" />
+          <Image source={{ uri: `http://192.168.8.243:7000/${movie.image}` }} className="w-full h-96" />
           <View className="absolute bottom-0 left-0 right-0 p-6">
             <Text className="text-white text-3xl font-bold mb-2">{movie.title}</Text>
             <View className="flex-row items-center">
