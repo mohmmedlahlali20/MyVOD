@@ -51,7 +51,7 @@ export default function VideoScreen() {
       <TouchableOpacity activeOpacity={1} className="flex-1 justify-center" onPress={() => setShowControls(!showControls)}>
         <Video
           ref={videoRef}
-          source={{ uri: replaceIp(movie.movies, "192.168.8.235") }}
+          source={{ uri: replaceIp(movie.movies, "192.168.8.243") }}
           style={{ width: "100%", height: "100%" }}
           resizeMode={ResizeMode.CONTAIN}
           useNativeControls={false}
