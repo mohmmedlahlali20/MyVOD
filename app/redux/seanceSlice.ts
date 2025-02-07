@@ -14,6 +14,7 @@ export interface Seance {
     movieId: Movie;
     roomId: Salle;
     seats: { number: number; available: boolean }[];
+    name: string;
     capacite: number;
     start_date: number;
     end_date: number;
