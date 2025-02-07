@@ -1,6 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import path from "../axios/path";
 
+export interface Director {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+
+}
+
 export interface Movie {
   _id: number;
   title: string;
@@ -8,13 +16,14 @@ export interface Movie {
   genre: string;
   image: string;
   publishedDate: string;
-  director: string;
+  director: Director;
   movies: string;
 }
 export interface MoviesState {
   movies: Movie[];
   selectedMovie: Movie | null;
   error: string | null;
+  loading: boolean;
 }
 
 
@@ -22,6 +31,7 @@ const initialState: MoviesState = {
   movies: [],
   selectedMovie: null,
   error: null,
+  loading: false,
 };
 
 export const fetchMovie = createAsyncThunk<Movie[], void>(
