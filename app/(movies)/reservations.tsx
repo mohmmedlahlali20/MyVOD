@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../redux/store";
@@ -7,6 +7,16 @@ import { fetchMovieDetails } from "../redux/movieSlice";
 import { fetchSessions, Seance } from "../redux/seanceSlice";
 import { Ionicons } from "@expo/vector-icons";
 import SessionList from "../../components/SessionList";
+import useWebSocketNotifications from "~/hook/notifications";
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 const Reservations = () => {
   const { movieId } = useLocalSearchParams();
@@ -36,12 +46,35 @@ const Reservations = () => {
     });
   };
 
+  useWebSocketNotifications();
+
+
+  useEffect(() => {
+    const checkPermissions = async () => {
+      const { status } = await Notifications.getPermissionsAsync();
+      console.log("📌 Statut des permissions:", status);
+    };
+  
+    checkPermissions();
+  }, []);
+
+  useEffect(() => {
+    setTimeout(async () => {
+      console.log("📢 Envoi d'une notification test...");
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "reservation successful",
+          body: "reservation successfully ",
+        },
+        trigger: { seconds: 3 },
+      });
+    }, 5000);
+  }, []);
+  
+  
+
   if (error) {
-    return (
-      <Text className="text-red-500 text-lg text-center">
-        Error fetching movie details
-      </Text>
-    );
+    return <Text className="text-red-500 text-lg text-center">Error fetching movie details</Text>;
   }
 
   return (
@@ -50,7 +83,7 @@ const Reservations = () => {
 
       {movie && (
         <View className="relative">
-          <Image source={{ uri: `http://192.168.8.243:7000/${movie.image}` }} className="w-full h-96" />
+          <Image source={{ uri: `http://192.168.1.28:7000/${movie.image}` }} className="w-full h-96" />
           <View className="absolute bottom-0 left-0 right-0 p-6">
             <Text className="text-white text-3xl font-bold mb-2">{movie.title}</Text>
             <View className="flex-row items-center">
