@@ -8,7 +8,6 @@ import movie2 from "../assets/images/movie2.jpg"
 import image2 from "../assets/images/image2.png"
 import image1 from "../assets/images/image1.png"
 import image3 from "../assets/images/image3.png"
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function Home() {
   return (
@@ -23,9 +22,12 @@ export default function Home() {
           </Text>
         </View>
 
-        <View className="flex-row justify-center space-x-6 mb-6">
-          <NavLink href="/movies" icon="movie" />
-          <NavLink href="/" icon="home" isActive />
+        <View className="flex-row justify-center space-x-6 mb-6 gap-5">
+          <NavLink href="/movies">Movies</NavLink>
+          <NavLink href="/series">Series</NavLink>
+          <NavLink href="/" isActive>
+            Home
+          </NavLink>
         </View>
 
         <View className="px-4 mb-8">
@@ -36,23 +38,21 @@ export default function Home() {
           </Text>
         </View>
 
-        <MovieSection title="Favorites" movies={[movie3, movie2, image2, image1, image3]} />
-        <MovieSection title="New Releases" movies={[movie2, movie3, image2, image1, image3]} />
+        <MovieSection title="Favorites" movies={[movie3, movie2,image2,image1,image3]} />
+        <MovieSection title="New Releases" movies={[movie2, movie3,image2,image1,image3]} />
       </ScrollView>
     </SafeAreaView>
   )
 }
 
-function NavLink({ href, icon, isActive = false }) {
+function NavLink({ href, children, isActive = false }) {
   return (
     <Link href={href} asChild>
-      <TouchableOpacity className="flex-row items-center space-x-2">
-        <View className="bg-gray-800 p-2 rounded-full shadow justify-center items-center w-12 h-12 border-2 border-transparent hover:border-red-500 transition-colors duration-300 ease-in-out transform hover:scale-110"> 
-        <Icon name={icon} size={20} color={isActive ? "red" : "white"} />
-        </View>
+      <TouchableOpacity>
+        <Text className={`text-lg ${isActive ? "text-red-500 font-semibold" : "text-gray-300"}`}>{children}</Text>
       </TouchableOpacity>
     </Link>
-  );
+  )
 }
 
 function MovieSection({ title, movies }) {
@@ -74,4 +74,3 @@ function MovieSection({ title, movies }) {
     </View>
   )
 }
-
